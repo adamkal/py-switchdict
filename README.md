@@ -32,3 +32,39 @@ or pull requests.
 
 Example
 -------
+
+```python
+import switchdict
+
+notifier = switchdict.SwitchDict()
+
+@notifier('email')
+def email_notifier(recopient, msg):
+  …
+
+@notifier('chat')
+def chat_notifier(recopient, msg):
+  …
+
+@notifier('snailmail')
+def snailmail_notifier(recopient, msg):
+  …
+
+@notifier.default
+def default_notifier(recopient, msg):
+  …
+
+
+class User(object):
+
+  def __init__(name, notify_by=''):
+    self.name = name
+    self.notify_by = notify_by
+
+  def notify(self, message):
+    notifier[self.notify_by](self.name, message)
+
+u = User('John', 'email')
+u.notify('Hello world')
+
+```
